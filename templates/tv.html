@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {%block head%}
+<title>TV</title>
+{%endblock head%} {% block body %}
+
+
+<div class="container-fluid">
+    <div class="row" align=center>
+        <h1>TV State</h1>
+        <h4>State</h4>
+        <!-- <p>{{state}}</p> -->
+
+        {% if state[3] == 1%}
+        <h5>TV on</h5>
+        <h5>Channel {{state[2]}}</h5>
+        {%if state[4]==1%}
+        <h5>Muted</h5>
+        {%else%}
+        <h5>Unmuted</h5>
+        {%endif%} {%else%}
+        <h5>TV off</h5>
+        {% endif %}
+
+
+
+    </div>
+    <div class="row" align=center>
+        <form method="post" action="/tv">
+            <input type="hidden" id="id" name="id" value="{{state[1]}}">
+            <button type="submit" class="btn btn-primary" id="tv on" name="command" value="tv on">On</button>
+            <button type="submit" class="btn btn-primary" id="tv off" name="command" value="tv off">Off</button>
+            <button type="submit" class="btn btn-primary" id="volume Up" name="command" value="volume Up">Increase Volume</button>
+            <button type="submit" class="btn btn-primary" id="volume Down" name="command" value="volume Down">Lower Volume</button>
+            <button type="submit" class="btn btn-primary" id="mute" name="command" value="mute">Mute</button>
+            <button type="submit" class="btn btn-primary" id="unmute" name="command" value="unmute">Unmute</button>
+            <input type="number" class="btn btn-primary" id="channel" name="command" min="1" max="999" value="{{state[2]}}">
+            <button type="submit" class="btn btn-danger" id="submit" name="channel" value="mute">Change Channel</button>
+        </form>
+    </div>
+
+</div>
+
+{%endblock body%}

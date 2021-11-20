@@ -1,0 +1,113 @@
+{% extends 'base.html' %} {%block head%}
+<title>AC</title>
+{%endblock head%} {% block body %}
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row" align=center>
+        <h1>AC State</h1>
+        <h4>State</h4>
+
+        <!-- <p>{{state}}</p> -->
+
+        {%if state[1]==0%}
+        <h5>AC off</h5>
+        {%else%}
+        <h5>AC on</h5>
+        <h5>{{state[5]}} mode</h5>
+        {%if state[5]=="cool"%}
+        <h5>{{state[2]}} Degrees</h5>
+        {%endif%} {%if state[5]=="cool" or state[5]=="fan"%}
+        <h5>Fanspeed {%if state[3]=="0"%} auto
+        </h5>
+        {%else%} {{state[3]}}
+        </h5>
+        {%endif%} {%if state[4]==0%}
+        <h5>Swing Off</h5>{%else%}
+        <h5>Swing On</h5>{%endif%}{%endif%}{%endif%}
+
+    </div>
+    <div class="row" align=center>
+        <form method="post" action="/ac">
+
+            <input type="hidden" id="id" name="id" value="{{state[6]}}">
+
+            <select name="power" class="btn btn-primary" id="power" required>
+                <option value='' disabled selected>Power</option>
+                <option value="on">on</option>
+                <option value="off">off</option>
+            </select>
+
+            <select name="mode" class="btn btn-primary" id="mode" required>
+                <!-- <option {% if state[5]=="cool" %}selected{%endif%} value="cool">cool</option>
+                    <option {% if state[5]=="fan" %}selected{%endif%} value="fan">fan</option>
+                    <option {% if state[5]=="dry" %}selected{%endif%} value="dry">dry</option>
+                    <option {% if state[5]=="off" %}selected{%endif%} value="off">off</option> -->
+            </select>
+
+            <input type="number" class="btn btn-primary" id="temp" name="temp" min="0" max="0" value="0" required>
+
+            <select name="fan" class="btn btn-primary" id="fan">
+                <!-- <option {% if state[3]=="0" %}selected{%endif%} value="0">fanspeed Auto</option>
+                    <option {% if state[3]=="1" %}selected{%endif%} value="1">fanspeed 1</option>
+                    <option {% if state[3]=="2" %}selected{%endif%} value="2">fanspeed 2</option>
+                    <option {% if state[3]=="3" %}selected{%endif%} value="3">fanspeed 3</option>
+                    <option {% if state[3]=="4" %}selected{%endif%} value="4">fanspeed 4</option>
+                    <option {% if state[3]=="5" %}selected{%endif%} value="5">fanspeed 5</option> -->
+            </select>
+
+            <select name="swing" class="btn btn-primary" id="swing">
+                <!-- <option {% if state[4]==1%}selected{%endif%} value="1">swing on</option>
+                    <option {% if state[4]==0%}selected{%endif%} value="0">swing off</option> -->
+            </select>
+
+            <button type="submit" class="btn btn-danger" id="submit" name="submit">Change State</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#power").change(function() {
+            var val = $(this).val();
+            if (val == "on") {
+                $("#mode").html("<option value='' disabled selected>Select Mode</option> <option value='cool'>cool</option> <option value='fan'>fan</option> <option value='dry'>dry</option>");
+            } else if (val == "off") {
+                $("#mode").html("<option value='off'>off</option>");
+                $("#temp").empty();
+                $("#fan").empty();
+                $("#swing").empty();
+                $("#temp").empty();
+
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $("#mode").change(function() {
+            var val = $(this).val();
+            if (val == "cool") {
+                $("#temp").replaceWith("<input type='number' class='btn btn-primary' id='temp' name='temp' min='18' max='32' value={{state[2]}}>");
+                $("#swing").html("<option value='' disabled selected>Select Swing</option> <option value='1'>swing on</option> <option  value='0'>swing off</option>");
+                $("#fan").html('<option value="" disabled selected>Select fanspeed</option> <option value="fanspeed auto">fanspeed Auto</option> <option value="fanspeed 1">fanspeed 1</option> <option value="fanspeed 2">fanspeed 2</option> <option value="fanspeed 3">fanspeed 3</option> <option value="fanspeed 4">fanspeed 4</option> <option value="fanspeed 5">fanspeed 5</option>');
+            } else if (val == "fan") {
+                $("#temp").replaceWith("<input type='number' class='btn btn-primary' id='temp' name='temp' min='0' max='0' value=0>");
+                $("#swing").html("<option value='' disabled selected>Select Swing</option> <option value='1'>swing on</option> <option  value='0'>swing off</option>");
+                $("#fan").html('<option value="" disabled selected>Select fanspeed</option> <option value="fanspeed auto">fanspeed Auto</option> <option value="fanspeed 1">fanspeed 1</option> <option value="fanspeed 2">fanspeed 2</option> <option value="fanspeed 3">fanspeed 3</option> <option value="fanspeed 4">fanspeed 4</option> <option value="fanspeed 5">fanspeed 5</option>');
+            } else if (val == "dry") {
+                $("#temp").replaceWith("<input type='number' class='btn btn-primary' id='temp' name='temp' min='0' max='0' value=0>");
+                $("#swing").html("<option value='0'>swing off</option>");
+                $("#fan").html('<option value="0">fan off</option>');
+            }
+        });
+    });
+</script>
+
+{%endblock body%}

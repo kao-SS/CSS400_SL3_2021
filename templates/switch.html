@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {%block head%}
+<title>Switch</title>
+{%endblock head%} {% block body %}
+
+<div class="container-fluid">
+    <div class="row" align=center>
+        <h1>Switch State</h1>
+        <h4>State</h4>
+        <!-- <p>{{state}}</p> -->
+        <!-- <h4>Power</h4> -->
+        <h5>{{power}}</h5>
+    </div>
+    <div class="row" align=center>
+        <form method="post" action="/switch">
+            <input type="hidden" id="id" name="id" value="{{state[1]}}">
+            <button type="submit" class="btn btn-primary" id="on" name="switch" value="1">On</button>
+            <button type="submit" class="btn btn-primary" id="off" name="switch" value="0">Off</button>
+        </form>
+    </div>
+
+</div>
+{% endblock body %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block head %}
+<title>Home</title>
+{% endblock head%} {% block body %}
+<div class="container-fluid">
+    <div class="row" align=center>
+        <h1 class="col-12">Rooms</h1>
+    </div>
+    <div class="row" align=center>
+        <form method="post" action="/selectRoom" class="col-12">
+
+            {%for i in data%}
+            <button type="submit" class="btn btn-dark" id={{i[0]}} name="roomID" value="{{i[0]}}">{{i[1]}}</button> {%endfor%}
+
+        </form>
+    </div>
+
+</div>
+{% endblock body%}

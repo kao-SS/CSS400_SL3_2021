@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% block head %}{% endblock head%}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+
+
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+                <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                    <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+                        <span class="fs-5 d-none d-sm-inline">Home</span>
+                    </a>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+
+                        <ul class="show nav flex-column ms-1" id="menu" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <form action="/selectRoom" method="post">
+                                    <button type="submit" class="btn btn-success mt-3" name="roomID" value="1" class="btn-link">Bedroom</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="/selectRoom" method="post">
+                                    <button type="submit" class="btn btn-success mt-3" name="roomID" value="2" class="btn-link">Living Room</button>
+                                </form>
+
+
+                            </li>
+                        </ul>
+                    </ul>
+                    <hr>
+
+                </div>
+            </div>
+            <div class="col py-3">
+                {% block body %}{% endblock body%}
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
